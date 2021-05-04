@@ -24,6 +24,17 @@ app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
 
+// POST user input
+
+const data = []
+app.post('/form', addInput)
+function addInput (req, res) {
+    data.push(req.body)
+}
+
+
+
+// Get api analysis url
 const getUrl = (formInput) => {
     const baseUrl = "https://api.meaningcloud.com/sentiment-2.1"
     const apiKey = "?key=" + process.env.api_key
@@ -34,3 +45,29 @@ const getUrl = (formInput) => {
     console.log(apiUrl)
     return apiUrl;
 }
+// fetch api request
+
+const getData = async url => {
+    try {
+        const res = await fetch (url);
+        const json = await res.json();
+        return json
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// api request to meaning cloud 
+
+app.get('/sentiment-analysis', async (req, res) => {
+    let analysisUrl = await getUrl(req.query.input);
+    let fullAnalysis = await getData(analysisUrl)
+    let sentimentAnalysis = {
+        source: req.query.input,
+        agreement: fullAnalysis.agreement,
+        confidence: fullAnalysis.confidence,
+        irony: fullAnalysis.irony,
+        subjectivity: fullAnalysis.subjectivity
+    }
+    res.send(sentimentAnalysis)
+})
