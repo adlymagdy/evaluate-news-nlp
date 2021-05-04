@@ -1,7 +1,17 @@
-import { checkForName } from './js/nameChecker'
 import { handleSubmit } from './js/formHandler'
+import { analysisContent } from './js/analysisContent';
+import { checkInput } from "./js/check-input";
+import { invalidInput } from "./js/invalidInput";
+import { apiCall } from "./js/api-call";
+import { updateUi } from "./js/updateUi";
 
-console.log(checkForName);
+console.log("index.js");
 
-alert("I EXIST")
-console.log("CHANGE!!");
+export {
+  handleSubmit,
+  analysisContent,
+  checkInput,
+  invalidInput,
+  apiCall,
+  updateUi
+}
