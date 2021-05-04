@@ -1,8 +1,8 @@
 const dotenv = require('dotenv');
-dotenv.config();
 var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
+dotenv.config();
 
 const app = express()
 
@@ -24,6 +24,13 @@ app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
 
-var textapi = new aylien({
-    application_key: process.env.api_key
-  });
+const getUrl = (formInput) => {
+    const baseUrl = "https://api.meaningcloud.com/sentiment-2.1"
+    const apiKey = "?key=" + process.env.api_key
+    const link = "&url=" + formInput
+    const lang = "&lang=en"
+    const model = "&model=general"
+    const apiUrl = `${baseUrl}${apiKey}${link}${lang}${lang}${model}`
+    console.log(apiUrl)
+    return apiUrl;
+}
